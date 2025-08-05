@@ -101,18 +101,18 @@
           },
           {
             label: "終値",
-            data: [ { x: 5, y: 0 } ],
+            data: [ { x: 10, y: 0 } ],
             borderColor: "transparent",
             backgroundColor: "red",
             pointRadius: 6,
             pointHoverRadius: 8,
             datalabels: {
               display: true,
-              align: "center",
-              anchor: "start",
+              align: "end",
+              anchor: "end",
               color: "black",
               font: { weight: "bold", size: isMobile ? 12 : 16 },
-              offset: 10,
+              offset: 14,
               formatter: v => `¥${v.y}`
             }
           }
@@ -178,9 +178,9 @@
       chart.options.scales.y.min = Math.floor(price - margin);
       chart.options.scales.y.max = Math.ceil(price + margin);
 
-      chart.data.datasets[0].data = [ { x: 10, y: price }, { x: 75, y: target } ];
-      chart.data.datasets[1].data = [ { x: 10, y: price }, { x: 75, y: lossCut } ];
-      chart.data.datasets[2].data = [ { x: 10, y: price } ];
+      chart.data.datasets[0].data = [ { x: 15, y: price }, { x: 75, y: target } ];
+      chart.data.datasets[1].data = [ { x: 15, y: price }, { x: 75, y: lossCut } ];
+      chart.data.datasets[2].data = [ { x: 15, y: price } ];
 
       chart.update();
 
