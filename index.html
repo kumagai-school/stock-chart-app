@@ -108,8 +108,8 @@
             pointHoverRadius: 8,
             datalabels: {
               display: true,
-              align: "left",
-              anchor: "start",
+              align: "middle",
+              anchor: "end",
               color: "black",
               font: { weight: "bold", size: isMobile ? 12 : 16 },
               formatter: v => `\u00a5${v.y}`
@@ -122,10 +122,10 @@
         maintainAspectRatio: false,
         layout: {
           padding: {
-            top: 60,
+            top: 80,
             bottom: 40,
             right: 100,
-            left: 10
+            left: 30
           }
         },
         plugins: {
@@ -179,7 +179,7 @@
 
       chart.data.datasets[0].data = [ { x: 0, y: price }, { x: 75, y: target } ];
       chart.data.datasets[1].data = [ { x: 0, y: price }, { x: 75, y: lossCut } ];
-      chart.data.datasets[2].data = [ { x: 0.5, y: price } ]; // 少しずらす
+      chart.data.datasets[2].data = [ { x: 3, y: price } ]; // 終値をY軸から離す
 
       chart.update();
 
