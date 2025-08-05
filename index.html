@@ -29,11 +29,12 @@
       height: auto;
       margin: 0;
       padding: 0;
+      aspect-ratio: 2 / 1; /* 横:縦 = 2:1 */
     }
 
     canvas {
       width: 100% !important;
-      height: auto !important;
+      height: 100% !important;
       display: block;
     }
 
@@ -51,7 +52,7 @@
   <input type="number" id="price" placeholder="例：1500" /> 円
 
   <div id="chart-container">
-    <canvas id="priceChart" height="400"></canvas>
+    <canvas id="priceChart"></canvas>
   </div>
 
   <div id="chart-values">
