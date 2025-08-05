@@ -36,6 +36,12 @@
       height: auto !important;
       display: block;
     }
+
+    #chart-values {
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
@@ -46,6 +52,11 @@
 
   <div id="chart-container">
     <canvas id="priceChart" height="400"></canvas>
+  </div>
+
+  <div id="chart-values">
+    <p id="targetText">目標株価：—</p>
+    <p id="lossCutText">ロスカット目安：—</p>
   </div>
 
   <script>
@@ -101,8 +112,12 @@
           }
         },
         plugins: {
-          datalabels: { display: true },
-          legend: { display: false },
+          datalabels: {
+            display: true
+          },
+          legend: {
+            display: false
+          },
           tooltip: {
             callbacks: {
               label: context => `\u00a5${context.parsed.y}`
@@ -144,6 +159,9 @@
       chart.data.datasets[1].data = [ { x: 0, y: price }, { x: 75, y: lossCut } ];
 
       chart.update();
+
+      document.getElementById("targetText").textContent = `目標株価：\u00a5${target}`;
+      document.getElementById("lossCutText").textContent = `ロスカット目安：\u00a5${lossCut}`;
     });
   </script>
 
