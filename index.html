@@ -29,7 +29,7 @@
       height: auto;
       margin: 0;
       padding: 0;
-      aspect-ratio: 2 / 1; /* 横:縦 = 2:1 */
+      aspect-ratio: 1.6 / 1;
     }
 
     canvas {
@@ -99,6 +99,22 @@
               font: { weight: "bold", size: isMobile ? 12 : 16 },
               formatter: v => ["ロスカット目安", `\u00a5${v.y}`]
             }
+          },
+          {
+            label: "終値",
+            data: [ { x: 0, y: 0 } ],
+            borderColor: "gray",
+            backgroundColor: "gray",
+            pointRadius: 6,
+            pointHoverRadius: 8,
+            datalabels: {
+              display: true,
+              align: "center",
+              anchor: "center",
+              color: "black",
+              font: { weight: "bold", size: isMobile ? 12 : 16 },
+              formatter: v => ["終値", `\u00a5${v.y}`]
+            }
           }
         ]
       },
@@ -131,7 +147,10 @@
             min: 0,
             max: 100,
             ticks: {
-              callback: value => value === 0 ? "終値" : value === 75 ? "指値" : ""
+              display: false
+            },
+            grid: {
+              display: false
             }
           },
           y: {
@@ -158,6 +177,7 @@
 
       chart.data.datasets[0].data = [ { x: 0, y: price }, { x: 75, y: target } ];
       chart.data.datasets[1].data = [ { x: 0, y: price }, { x: 75, y: lossCut } ];
+      chart.data.datasets[2].data = [ { x: 0, y: price } ];
 
       chart.update();
 
