@@ -33,7 +33,7 @@
 
     canvas {
       width: 100% !important;
-      height: 60vw !important;
+      height: auto !important;
       display: block;
     }
 
@@ -51,7 +51,7 @@
   <input type="number" id="price" placeholder="例：1500" /> 円
 
   <div id="chart-container">
-    <canvas id="priceChart"></canvas>
+    <canvas id="priceChart" height="200"></canvas>
   </div>
 
   <div id="chart-values">
@@ -68,24 +68,8 @@
       data: {
         datasets: [
           {
-            label: "終値",
-            data: [ { x: 20, y: 0 } ],
-            borderColor: "black",
-            backgroundColor: "red",
-            pointRadius: 6,
-            pointHoverRadius: 8,
-            datalabels: {
-              display: true,
-              align: "right",
-              anchor: "end",
-              color: "black",
-              font: { weight: "bold", size: isMobile ? 12 : 16 },
-              formatter: v => `\u00a5${v.y}`
-            }
-          },
-          {
             label: "目標株価",
-            data: [ { x: 20, y: 0 }, { x: 75, y: 0 } ],
+            data: [ { x: 0, y: 0 }, { x: 75, y: 0 } ],
             borderColor: "red",
             backgroundColor: "red",
             pointRadius: 6,
@@ -101,7 +85,7 @@
           },
           {
             label: "ロスカット目安",
-            data: [ { x: 20, y: 0 }, { x: 75, y: 0 } ],
+            data: [ { x: 0, y: 0 }, { x: 75, y: 0 } ],
             borderColor: "blue",
             backgroundColor: "blue",
             pointRadius: 6,
@@ -114,6 +98,22 @@
               font: { weight: "bold", size: isMobile ? 12 : 16 },
               formatter: v => ["ロスカット目安", `\u00a5${v.y}`]
             }
+          },
+          {
+            label: "終値",
+            data: [ { x: 0, y: 0 } ],
+            borderColor: "transparent",
+            backgroundColor: "red",
+            pointRadius: 6,
+            pointHoverRadius: 8,
+            datalabels: {
+              display: true,
+              align: "left",
+              anchor: "start",
+              color: "black",
+              font: { weight: "bold", size: isMobile ? 12 : 16 },
+              formatter: v => `\u00a5${v.y}`
+            }
           }
         ]
       },
@@ -122,9 +122,10 @@
         maintainAspectRatio: false,
         layout: {
           padding: {
-            top: 40,
+            top: 60,
             bottom: 40,
-            right: 100
+            right: 100,
+            left: 10
           }
         },
         plugins: {
@@ -173,9 +174,12 @@
       const lossCut = Math.floor(price * 0.92);
       const margin = price * 0.15;
 
-      chart.data.datasets[0].data = [ { x: 20, y: price } ];
-      chart.data.datasets[1].data = [ { x: 20, y: price }, { x: 75, y: target } ];
-      chart.data.datasets[2].data = [ { x: 20, y: price }, { x: 75, y: lossCut } ];
+      chart.options.scales.y.min = Math.floor(price - margin);
+      chart.options.scales.y.max = Math.ceil(price + margin);
+
+      chart.data.datasets[0].data = [ { x: 0, y: price }, { x: 75, y: target } ];
+      chart.data.datasets[1].data = [ { x: 0, y: price }, { x: 75, y: lossCut } ];
+      chart.data.datasets[2].data = [ { x: 0.5, y: price } ]; // 少しずらす
 
       chart.update();
 
