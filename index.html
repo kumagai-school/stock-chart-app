@@ -29,12 +29,11 @@
       height: auto;
       margin: 0;
       padding: 0;
-      aspect-ratio: 1.6 / 1;
     }
 
     canvas {
       width: 100% !important;
-      height: 100% !important;
+      height: 60vw !important;
       display: block;
     }
 
@@ -69,8 +68,24 @@
       data: {
         datasets: [
           {
+            label: "終値",
+            data: [ { x: 20, y: 0 } ],
+            borderColor: "black",
+            backgroundColor: "red",
+            pointRadius: 6,
+            pointHoverRadius: 8,
+            datalabels: {
+              display: true,
+              align: "right",
+              anchor: "end",
+              color: "black",
+              font: { weight: "bold", size: isMobile ? 12 : 16 },
+              formatter: v => `\u00a5${v.y}`
+            }
+          },
+          {
             label: "目標株価",
-            data: [ { x: 0, y: 0 }, { x: 75, y: 0 } ],
+            data: [ { x: 20, y: 0 }, { x: 75, y: 0 } ],
             borderColor: "red",
             backgroundColor: "red",
             pointRadius: 6,
@@ -86,7 +101,7 @@
           },
           {
             label: "ロスカット目安",
-            data: [ { x: 0, y: 0 }, { x: 75, y: 0 } ],
+            data: [ { x: 20, y: 0 }, { x: 75, y: 0 } ],
             borderColor: "blue",
             backgroundColor: "blue",
             pointRadius: 6,
@@ -98,22 +113,6 @@
               color: "blue",
               font: { weight: "bold", size: isMobile ? 12 : 16 },
               formatter: v => ["ロスカット目安", `\u00a5${v.y}`]
-            }
-          },
-          {
-            label: "終値",
-            data: [ { x: 10, y: 0 } ],
-            borderColor: "gray",
-            backgroundColor: "gray",
-            pointRadius: 6,
-            pointHoverRadius: 8,
-            datalabels: {
-              display: true,
-              align: "center",
-              anchor: "center",
-              color: "black",
-              font: { weight: "bold", size: isMobile ? 12 : 16 },
-              formatter: v => ["終値", `\u00a5${v.y}`]
             }
           }
         ]
@@ -159,9 +158,6 @@
             },
             grid: {
               display: false
-            },
-            title: {
-              display: false
             }
           }
         }
@@ -177,12 +173,9 @@
       const lossCut = Math.floor(price * 0.92);
       const margin = price * 0.15;
 
-      chart.options.scales.y.min = Math.floor(price - margin);
-      chart.options.scales.y.max = Math.ceil(price + margin);
-
-      chart.data.datasets[0].data = [ { x: 0, y: price }, { x: 75, y: target } ];
-      chart.data.datasets[1].data = [ { x: 0, y: price }, { x: 75, y: lossCut } ];
-      chart.data.datasets[2].data = [ { x: 10, y: price } ];
+      chart.data.datasets[0].data = [ { x: 20, y: price } ];
+      chart.data.datasets[1].data = [ { x: 20, y: price }, { x: 75, y: target } ];
+      chart.data.datasets[2].data = [ { x: 20, y: price }, { x: 75, y: lossCut } ];
 
       chart.update();
 
