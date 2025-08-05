@@ -101,18 +101,19 @@
           },
           {
             label: "終値",
-            data: [ { x: 0, y: 0 } ],
+            data: [ { x: 0.5, y: price } ],
             borderColor: "transparent",
-            backgroundColor: "red",
-            pointRadius: 6,
+            backgroundColor: "transparent", // ← 赤から変更
+            pointRadius: 0, // ← 点なし
             pointHoverRadius: 8,
             datalabels: {
               display: true,
-              align: "middle",
+              align: "right",
               anchor: "end",
               color: "black",
               font: { weight: "bold", size: isMobile ? 12 : 16 },
-              formatter: v => `\u00a5${v.y}`
+              formatter: v => `\u00a5${v.y}`,
+              offset: 10 // 少し余白を
             }
           }
         ]
