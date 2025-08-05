@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>指値チャートアプリ</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1rem;
+      margin: 0;
+      background: #f9f9f9;
+    }
+
+    input {
+      font-size: 1.1rem;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      width: 100%;
+      max-width: 300px;
+      box-sizing: border-box;
+    }
+
+    #chart-container {
+      width: 100vw;
+      max-width: 100vw;
+      height: auto;
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: auto !important;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>指値チャート</h2>
+  <label for="price">終値を入力してください：</label><br>
+  <input type="number" id="price" placeholder="例：1500" /> 円
+
+  <div id="chart-container">
+    <canvas id="priceChart" height="400"></canvas>
+  </div>
+
+  <script>
+    const isMobile = window.innerWidth < 480;
+    const ctx = document.getElementById("priceChart").getContext("2d");
+
+    const chart = new Chart(ctx, {
+      type: "line",
+      data: {
+        datasets: [
+          {
+            label: "目標株価",
+            data: [ { x: 0, y: 0 }, { x: 75, y: 0 } ],
+            borderColor: "red",
+            backgroundColor: "red",
+            pointRadius: 6,
+            pointHoverRadius: 8,
+            datalabels: {
+              display: ctx => ctx.dataIndex === 1,
+              align: "top",
+              anchor: "end",
+              color: "red",
+              font: { weight: "bold", size: isMobile ? 12 : 16 },
+              formatter: v => ["目標株価", `\u00a5${v.y}`]
+            }
+          },
+          {
+            label: "ロスカット目安",
+            data: [ { x: 0, y: 0 }, { x: 75, y: 0 } ],
+            borderColor: "blue",
+            backgroundColor: "blue",
+            pointRadius: 6,
+            pointHoverRadius: 8,
+            datalabels: {
+              display: ctx => ctx.dataIndex === 1,
+              align: "bottom",
+              anchor: "end",
+              color: "blue",
+              font: { weight: "bold", size: isMobile ? 12 : 16 },
+              formatter: v => ["ロスカット目安", `\u00a5${v.y}`]
+            }
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+          padding: {
+            top: 40,
+            bottom: 40,
+            right: 100
+          }
+        },
+        plugins: {
+          datalabels: { display: true },
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: context => `\u00a5${context.parsed.y}`
+            }
+          }
+        },
+        scales: {
+          x: {
+            type: "linear",
+            min: 0,
+            max: 100,
+            ticks: {
+              callback: value => value === 0 ? "終値" : value === 75 ? "指値" : ""
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: "株価（円）"
+            }
+          }
+        }
+      },
+      plugins: [ChartDataLabels]
+    });
+
+    document.getElementById("price").addEventListener("input", function () {
+      const price = parseFloat(this.value);
+      if (isNaN(price)) return;
+
+      const target = Math.floor(price * 1.08);
+      const lossCut = Math.floor(price * 0.92);
+      const margin = price * 0.15;
+
+      chart.options.scales.y.min = Math.floor(price - margin);
+      chart.options.scales.y.max = Math.ceil(price + margin);
+
+      chart.data.datasets[0].data = [ { x: 0, y: price }, { x: 75, y: target } ];
+      chart.data.datasets[1].data = [ { x: 0, y: price }, { x: 75, y: lossCut } ];
+
+      chart.update();
+    });
+  </script>
+
+</body>
+</html>
