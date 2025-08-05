@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>指値チャートアプリ</title>
+  <title>Rポインター（指値自動計算ツール）</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
   <style>
@@ -64,12 +64,23 @@
       color: blue;
       font-weight: bold;
     }
+
+    .notice {
+      margin-top: 2rem;
+      font-size: 0.95rem;
+      color: #444;
+      background: #fff;
+      padding: 1rem;
+      border-left: 5px solid #ccc;
+      border-radius: 6px;
+      white-space: pre-line;
+    }
   </style>
 </head>
 <body>
 
-  <h2>指値チャート</h2>
-  <label for="price">終値を入力してください：</label><br>
+  <h2>Rポインター（指値自動計算ツール）</h2>
+  <label for="price">買値からいくらで売り指値をすれば良いか自動で計算いたします。<br>買値を下記に入力してください。</label><br>
   <input type="number" id="price" placeholder="例：1500" /> 円
 
   <div id="chart-container">
@@ -79,6 +90,16 @@
   <div id="chart-values">
     <div id="targetText" class="value-box target">目標株価：—</div>
     <div id="lossCutText" class="value-box loss">ロスカット目安：—</div>
+  </div>
+
+  <div class="notice">
+----------------------
+
+【ご注意ください!!】
+表示される目標株価は単純計算しているものです。到達することを保証しているものではございません。
+銘柄によって売買できる最小単位（10円単位や100円単位）などがあります。その場合には、目標株価は切り捨て・ロスカット目安は切り上げをオススメいたします。
+
+----------------------
   </div>
 
   <script>
