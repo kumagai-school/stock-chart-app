@@ -101,18 +101,18 @@
           },
           {
             label: "終値",
-            data: [ { x: 10, y: 0 } ],
+            data: [ { x: 15, y: 0 } ],
             borderColor: "transparent",
             backgroundColor: "red",
             pointRadius: 6,
             pointHoverRadius: 8,
             datalabels: {
               display: true,
-              align: "end",
-              anchor: "end",
+              align: "top",
+              anchor: "center",
               color: "black",
               font: { weight: "bold", size: isMobile ? 12 : 16 },
-              offset: 14,
+              offset: -6,
               formatter: v => `¥${v.y}`
             }
           }
