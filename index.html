@@ -102,7 +102,7 @@
           },
           {
             label: "終値",
-            data: [ { x: 0, y: 0 } ],
+            data: [ { x: 10, y: 0 } ],
             borderColor: "gray",
             backgroundColor: "gray",
             pointRadius: 6,
@@ -154,9 +154,14 @@
             }
           },
           y: {
+            ticks: {
+              display: false
+            },
+            grid: {
+              display: false
+            },
             title: {
-              display: true,
-              text: "株価（円）"
+              display: false
             }
           }
         }
@@ -177,7 +182,7 @@
 
       chart.data.datasets[0].data = [ { x: 0, y: price }, { x: 75, y: target } ];
       chart.data.datasets[1].data = [ { x: 0, y: price }, { x: 75, y: lossCut } ];
-      chart.data.datasets[2].data = [ { x: 0, y: price } ];
+      chart.data.datasets[2].data = [ { x: 10, y: price } ];
 
       chart.update();
 
