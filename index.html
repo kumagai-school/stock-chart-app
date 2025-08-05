@@ -38,9 +38,31 @@
     }
 
     #chart-values {
-      margin-top: 1.5rem;
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
       font-size: 1.2rem;
-      line-height: 1.6;
+    }
+
+    .value-box {
+      background: white;
+      padding: 1rem;
+      border-left: 6px solid #444;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .target {
+      border-color: red;
+      color: red;
+      font-weight: bold;
+    }
+
+    .loss {
+      border-color: blue;
+      color: blue;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -55,8 +77,8 @@
   </div>
 
   <div id="chart-values">
-    <p id="targetText">目標株価：—</p>
-    <p id="lossCutText">ロスカット目安：—</p>
+    <div id="targetText" class="value-box target">目標株価：—</div>
+    <div id="lossCutText" class="value-box loss">ロスカット目安：—</div>
   </div>
 
   <script>
