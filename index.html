@@ -101,19 +101,18 @@
           },
           {
             label: "終値",
-            data: [ { x: 0.5, y: price } ],
+            data: [ { x: 5, y: 0 } ],
             borderColor: "transparent",
-            backgroundColor: "transparent", // ← 赤から変更
-            pointRadius: 0, // ← 点なし
+            backgroundColor: "red",
+            pointRadius: 6,
             pointHoverRadius: 8,
             datalabels: {
               display: true,
-              align: "right",
+              align: "center",
               anchor: "end",
               color: "black",
               font: { weight: "bold", size: isMobile ? 12 : 16 },
-              formatter: v => `\u00a5${v.y}`,
-              offset: 10 // 少し余白を
+              formatter: v => `\u00a5${v.y}`
             }
           }
         ]
@@ -123,10 +122,10 @@
         maintainAspectRatio: false,
         layout: {
           padding: {
-            top: 80,
+            top: 60,
             bottom: 40,
             right: 100,
-            left: 30
+            left: 10
           }
         },
         plugins: {
@@ -178,9 +177,9 @@
       chart.options.scales.y.min = Math.floor(price - margin);
       chart.options.scales.y.max = Math.ceil(price + margin);
 
-      chart.data.datasets[0].data = [ { x: 0, y: price }, { x: 75, y: target } ];
-      chart.data.datasets[1].data = [ { x: 0, y: price }, { x: 75, y: lossCut } ];
-      chart.data.datasets[2].data = [ { x: 3, y: price } ]; // 終値をY軸から離す
+      chart.data.datasets[0].data = [ { x: 5, y: price }, { x: 75, y: target } ];
+      chart.data.datasets[1].data = [ { x: 5, y: price }, { x: 75, y: lossCut } ];
+      chart.data.datasets[2].data = [ { x: 5, y: price } ];
 
       chart.update();
 
